@@ -20,6 +20,21 @@ namespace SalesWebApi.Controllers
             _context = context;
         }
 
+        //inserting the multiplier for the Totals line
+        // PUT: api/Orders/Recalc/5   **make sure its a different URL than the PUT method below
+        [HttpPut("recalc/{orderId}")]
+        public async Task<IActionResult> RecalculateOrder(int orderId) {
+            var order = await _context.Orders.FindAsync(orderId);
+
+            var sum = order.OrderLines.Sum(x => x.Qty * x.Price);
+
+            order.Total = sum;
+
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
         // GET: api/Orders
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Order>>> GetOrder()
