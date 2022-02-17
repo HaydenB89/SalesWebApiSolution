@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SalesWebApi.Models;
 
 namespace SalesWebApi.Models {
     public class AppDbContext : DbContext {
@@ -14,5 +15,7 @@ namespace SalesWebApi.Models {
 
         protected override void OnModelCreating(ModelBuilder builder) { 
         }
+
+        public DbSet<SalesWebApi.Models.Order> Order { get; set; }
     }
 }
